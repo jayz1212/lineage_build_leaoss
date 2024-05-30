@@ -3,7 +3,9 @@ echo ""
 echo "LineageOS 18.x Unified Buildbot - LeaOS version"
 echo "Executing in 5 seconds - CTRL-C to exit"
 echo ""
-sleep 5
+repo init -u https://github.com/LineageOS/android.git -b lineage-18.1
+git clone https://github.com/iceows/lineage_build_leaos lineage_build_leaos -b lineage-18.1
+git clone https://github.com/iceows/lineage_patches_leaos lineage_patches_leaos -b lineage-18.1
 
 if [ $# -lt 1 ]
 then
@@ -42,9 +44,9 @@ START=`date +%s`
 BUILD_DATE="$(date +%Y%m%d)"
 WITHOUT_CHECK_API=true
 WITH_SU=true
-export OUT_DIR=/home/iceows/build/Los18.1
+#export OUT_DIR=/home/iceows/build/Los18.1
 
-repo init -u https://github.com/LineageOS/android.git -b lineage-18.1 --git-lfs
+
 
 
 prep_build() {
@@ -55,8 +57,35 @@ prep_build() {
 	echo ""
 
 	echo "Syncing repos"
-	repo sync -j$(nproc --all) -c -q --force-sync --no-tags --no-clone-bundle --optimized-fetch --prune
 
+main() {
+    # Run repo sync command and capture the output
+    repo sync -c -j${CORE} --force-sync --no-clone-bundle --no-tags 2>&1 | tee /tmp/output.txt
+    # Check if there are any failing repositories
+    if grep -q "Failing repos:" /tmp/output.txt ; then
+        echo "Deleting failing repositories..."
+        # Extract failing repositories from the error message and echo the deletion path
+        while IFS= read -r line; do
+            # Extract repository name and path from the error message
+            repo_info=$(echo "$line" | awk -F': ' '{print $NF}')
+            repo_path=$(dirname "$repo_info")
+            repo_name=$(basename "$repo_info")
+            # Echo the deletion path
+            echo "Deleted repository: $repo_info"
+            # Save the deletion path to a text file
+            echo "Deleted repository: $repo_info" > deleted_repositories.txt
+            # Delete the repository
+            rm -rf "$repo_path/$repo_name"
+        done <<< "$(cat /tmp/output.txt | awk '/Failing repos:/ {flag=1; next} /Try/ {flag=0} flag')"
+        # Re-sync all repositories after deletion
+        echo "Re-syncing all repositories..."
+        repo sync -c -j${CORE} --force-sync --no-clone-bundle --no-tags
+    else
+        echo "All repositories synchronized successfully."
+    fi
+}
+main $*
+repo forall -c "git lfs install && git lfs pull && git lfs checkout"
 	echo ""
 
 	echo "Setting up build environment"
@@ -112,7 +141,8 @@ build_treble() {
     esac
     lunch ${TARGET}-userdebug
     make installclean
-    make -j$(nproc --all) systemimage
+    make bacon
+   # make -j$(nproc --all) systemimage
     #make vndk-test-sepolicy
     mv $OUT/system.img ~/build-output/LeaOS-18.1-$BUILD_DATE-${TARGET}.img
 }
