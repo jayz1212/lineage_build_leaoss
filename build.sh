@@ -53,7 +53,7 @@ prep_build() {
 	echo "Preparing local manifests"
 	rm -rf .repo/local_manifests
 	mkdir -p .repo/local_manifests
-	cp ./lineage_build_leaos/local_manifests_leaos/*.xml .repo/local_manifests
+	cp ./lineage_build_leaoss/local_manifests_leaos/*.xml .repo/local_manifests
 	echo ""
 
 	echo "Syncing repos"
