@@ -157,6 +157,14 @@ rm out/target/product/*/*.img
     make installclean
     make -j$(nproc --all) systemimage
 
+    cd frameworks/base
+sleep 1 &&git fetch https://github.com/xc112lg/android_frameworks_base.git patch-1
+sleep 1 &&git cherry-pick ff31cc43e514f3b57846d1cf221411fd08e9726e
+cd ../..
+
+       make installclean
+    make -j$(nproc --all) systemimage
+
    
     
  #   lunch treble_arm64_avZ-userdebug
