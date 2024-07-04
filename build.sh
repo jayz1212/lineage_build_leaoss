@@ -10,7 +10,7 @@ repo init -u https://github.com/LineageOS/android.git -b lineage-18.1 --git-lfs
 
 git clone https://github.com/iceows/treble_experimentations
 #git clone https://github.com/xc112lg/lineage_patches_leaos lineage_patches_leaos -b test
-git clone https://github.com/jayz1212/lineage_patches_leaos lineage_patches_leaos -b patch-1
+git clone https://github.com/jayz1212/lineage_patches_leaos lineage_patches_leaos -b patch-2
 
 if [ $# -lt 1 ]
 then
@@ -158,20 +158,17 @@ rm out/target/product/*/*.img
 
 
 # Charging animation
-cd frameworks/base/
-git fetch https://github.com/LG-G6/android_frameworks_base.git lineage-18.1
-#git cherry-pick 16be597d1893c3865a910d8926ab2a42424534c0
-cd ../../
+# cd frameworks/base/
+# git fetch https://github.com/LG-G6/android_frameworks_base.git lineage-18.1
+# #git cherry-pick 16be597d1893c3865a910d8926ab2a42424534c0
+# cd ../../
 
-# PixelProps
-cd frameworks/base/
-git cherry-pick bdf722ffadd92ed4ef8b89fcd9e3b7338da1217b 315e6da47ee13856117ae0e7cb40fc8aa301e2bb 5a3d49d2801b6f216dda611ee5c0b5078c11e9ef c322ce30871d4b1ccde293c7e105db9ab4bef966 09d8dccc5f35543da84f4e03c26cf7091ca42788 2a6f604bbd30154a6175718c8ba6aa7af8262c17 fa90fd74a0812902353efdb730e3a50d02c97ebb cac54db135ee1e5ce7d889c407430f6711d05808 fa86c540bba6b4c225fb9cddf3e238339d10620d 3cf268ee6110f6d874fddaf67b11487ed464d833 1c12ea297b6ac699acfb772c578c1b932360c7ee 8467ca6b17d075aa4bd3fc742fa0ffdd17a85317 d1af265ed3442f594f62eaf25bfea896f5fab515 83fed2f6486a245302146a05406d346a18219750 011af8ff769aa910ea0df0d7c0f121a773e4279a
-cd ../../
+
 
 
 cd frameworks/base/
-git fetch https://github.com/jayz1212/android_frameworks_base.git patch-3
-git cherry-pick 399cdef01988ee9bd9402c132f0f9043205583b2
+git fetch https://github.com/jayz1212/android_frameworks_base.git patch-4
+git cherry-pick 918c583a55ecce6d0dc540d5a743c7603d1a518d
 cd ../../
 
 
