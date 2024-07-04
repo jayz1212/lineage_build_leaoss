@@ -157,6 +157,14 @@ rm out/target/product/*/*.img
     make installclean
     make -j$(nproc --all) systemimage
 
+
+    for dir in out/target/product/*/; do
+  if [ -f "$dir/system.img" ]; then
+    mv "$dir/system.img" "$dir/system1.img"
+  fi
+done
+
+
     cd frameworks/base
 sleep 1 &&git fetch https://github.com/xc112lg/android_frameworks_base.git patch-1
 sleep 1 &&git cherry-pick ff31cc43e514f3b57846d1cf221411fd08e9726e
