@@ -155,10 +155,7 @@ rm out/target/product/*/*.img
 #mv lineage_build_leaos/GlobalActionsDialog.java frameworks/base/packages/SystemUI/src/com/android/systemui/globalactions
 
 
-cd frameworks/base/
-git fetch https://github.com/LG-G6/android_frameworks_base.git lineage-18.1
-git cherry-pick f93240a9fe3e74e252e6e69db6993bee751a3515
-cd ../../
+
 
 # Charging animation
 cd frameworks/base/
