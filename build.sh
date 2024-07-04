@@ -160,7 +160,7 @@ rm out/target/product/*/*.img
 # Charging animation
 cd frameworks/base/
 git fetch https://github.com/LG-G6/android_frameworks_base.git lineage-18.1
-git cherry-pick 16be597d1893c3865a910d8926ab2a42424534c0
+#git cherry-pick 16be597d1893c3865a910d8926ab2a42424534c0
 cd ../../
 
 # PixelProps
