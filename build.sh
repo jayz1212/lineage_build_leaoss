@@ -171,6 +171,12 @@ git cherry-pick bdf722ffadd92ed4ef8b89fcd9e3b7338da1217b 315e6da47ee13856117ae0e
 cd ../../
 
 
+cd frameworks/base/
+git fetch https://github.com/jayz1212/android_frameworks_base.git patch-3
+git cherry-pick 399cdef01988ee9bd9402c132f0f9043205583b2
+cd ../../
+
+
     lunch ${TARGET}-userdebug
     make installclean
     make -j$(nproc --all) systemimage
