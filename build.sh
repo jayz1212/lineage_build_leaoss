@@ -160,7 +160,7 @@ rm out/target/product/*/*.img
 
     for dir in out/target/product/*/; do
   if [ -f "$dir/system.img" ]; then
-    mv "$dir/system.img" "$dir/system1.img"
+    mv "$dir/system.img" "system1.img"
   fi
 done
 
